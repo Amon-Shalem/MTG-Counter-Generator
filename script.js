@@ -157,11 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // 更新預覽邏輯
     function renderTokenList() {
         tokenListContainer.innerHTML = '';
+        const isZH = document.documentElement.lang === 'zh-TW';
+        
         customTokens.forEach((t, index) => {
             const li = document.createElement('li');
-            const abilityStr = t.type === 'none' ? '無能力' : keywordData[t.type].name;
+            const abilityNoneStr = isZH ? '無能力' : 'None';
+            const deleteStr = isZH ? '刪除' : 'Delete';
+            const abilityStr = t.type === 'none' ? abilityNoneStr : keywordData[t.type].name;
             const ptStr = (t.power !== '' || t.toughness !== '') ? `(${t.power || 0}/${t.toughness || 0})` : '';
-            li.innerHTML = `<span>${abilityStr} ${ptStr} x${t.qty}</span> <button data-index="${index}">刪除</button>`;
+            li.innerHTML = `<span>${abilityStr} ${ptStr} x${t.qty}</span> <button data-index="${index}">${deleteStr}</button>`;
             
             li.querySelector('button').addEventListener('click', (e) => {
                 const idx = parseInt(e.target.getAttribute('data-index'), 10);
@@ -219,7 +223,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // 4. 計算最大容量
         const maxCapacity = cols * rows;
         if (countersToGenerate.length > maxCapacity) {
-            alert(`目前設定的指示物數量 (${countersToGenerate.length}) 超過了版面容量 (${maxCapacity})！\n將截斷多餘的指示物。如果需要排滿請調整行數列數。`);
+            const isZH = document.documentElement.lang === 'zh-TW';
+            if (isZH) {
+                alert(`目前設定的指示物數量 (${countersToGenerate.length}) 超過了版面容量 (${maxCapacity})！\n將截斷多餘的指示物。如果需要排滿請調整行數列數。`);
+            } else {
+                alert(`Current counters (${countersToGenerate.length}) exceed the grid capacity (${maxCapacity})!\nExcess counters will be truncated. Adjust rows/cols to fit more.`);
+            }
             countersToGenerate = countersToGenerate.slice(0, maxCapacity);
         }
 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTG Counter Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 加入 Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 左側控制面板 -->
+        <aside class="sidebar no-print">
+            <div style="text-align: right; font-size: 14px; margin-bottom: 20px;">
+                <a href="index.html" style="color: #666; text-decoration: none;">English</a> | 
+                <span style="color: #000; font-weight: bold;">繁體中文</span>
+            </div>
+            <header>
+                <h1>MTG Counter</h1>
+                <p>Generator for printing</p>
+            </header>
+
+            <section class="control-group">
+                <h2>版面設定</h2>
+                <div class="input-pair">
+                    <label>
+                        列數 (Columns)
+                        <input type="number" id="colsInput" value="4" min="1" max="10">
+                    </label>
+                    <label>
+                        行數 (Rows)
+                        <input type="number" id="rowsInput" value="5" min="1" max="15">
+                    </label>
+                </div>
+                <div class="hint">預設為 A4 (210 x 297mm) 適用</div>
+            </section>
+
+            <section class="control-group feature-list">
+                <h2>指示物種類設定</h2>
+                
+                <div class="counter-input">
+                    <label>+1/+1 指示物</label>
+                    <input type="number" data-type="plusOne" value="5" min="0">
+                </div>
+                
+                <div class="counter-input">
+                    <label>-1/-1 指示物</label>
+                    <input type="number" data-type="minusOne" value="0" min="0">
+                </div>
+                <hr>
+                <div class="counter-input"><label>飛行 (Flying)</label><input type="number" data-type="flying" value="3" min="0"></div>
+                <div class="counter-input"><label>踐踏 (Trample)</label><input type="number" data-type="trample" value="2" min="0"></div>
+                <div class="counter-input"><label>死觸 (Deathtouch)</label><input type="number" data-type="deathtouch" value="1" min="0"></div>
+                <div class="counter-input"><label>防禦者 (Defender)</label><input type="number" data-type="defender" value="0" min="0"></div>
+                <div class="counter-input"><label>連擊 (Double Strike)</label><input type="number" data-type="double-strike" value="0" min="0"></div>
+                <div class="counter-input"><label>結附 (Enchant)</label><input type="number" data-type="enchant" value="0" min="0"></div>
+                <div class="counter-input"><label>佩帶 (Equip)</label><input type="number" data-type="equip" value="0" min="0"></div>
+                <div class="counter-input"><label>先攻 (First Strike)</label><input type="number" data-type="first-strike" value="0" min="0"></div>
+                <div class="counter-input"><label>閃現 (Flash)</label><input type="number" data-type="flash" value="0" min="0"></div>
+                <div class="counter-input"><label>敏捷 (Haste)</label><input type="number" data-type="haste" value="0" min="0"></div>
+                <div class="counter-input"><label>辟邪 (Hexproof)</label><input type="number" data-type="hexproof" value="0" min="0"></div>
+                <div class="counter-input"><label>不滅 (Indestructible)</label><input type="number" data-type="indestructible" value="0" min="0"></div>
+                <div class="counter-input"><label>繫命 (Lifelink)</label><input type="number" data-type="liftlink" value="0" min="0"></div>
+                <div class="counter-input"><label>威懾 (Menace)</label><input type="number" data-type="menace" value="0" min="0"></div>
+                <div class="counter-input"><label>反色保護 (Protection)</label><input type="number" data-type="protection" value="0" min="0"></div>
+                <div class="counter-input"><label>靈技 (Prowess)</label><input type="number" data-type="prowess" value="0" min="0"></div>
+                <div class="counter-input"><label>延勢 (Reach)</label><input type="number" data-type="reach" value="0" min="0"></div>
+                <div class="counter-input"><label>占卜 (Scry)</label><input type="number" data-type="scry" value="0" min="0"></div>
+                <div class="counter-input"><label>暈眩 (Stun)</label><input type="number" data-type="stun" value="0" min="0"></div>
+                <div class="counter-input"><label>警戒 (Vigilance)</label><input type="number" data-type="vigilance" value="0" min="0"></div>
+                <div class="counter-input"><label>守護 (Ward)</label><input type="number" data-type="ward" value="0" min="0"></div>
+                <!-- 預留未來可以新增更多 -->
+            </section>
+
+            <section class="control-group token-builder">
+                <h2>建立衍生物 (Tokens)</h2>
+                <div class="token-form">
+                    <select id="tokenKeyword">
+                        <!-- Javascript 動態注入選項 -->
+                        <option value="none">無能力 (None)</option>
+                    </select>
+                    <div class="pt-inputs">
+                        <input type="text" id="tokenPower" placeholder="攻" maxlength="2" class="pt-box">
+                        <span>/</span>
+                        <input type="text" id="tokenToughness" placeholder="防" maxlength="2" class="pt-box">
+                        <span class="x-times">x</span>
+                        <input type="number" id="tokenQty" value="1" min="1" max="99" class="qty-box">
+                    </div>
+                    <button id="addTokenBtn" class="btn outline token-add-btn">加 入 清 單</button>
+                </div>
+                <div class="token-list">
+                    <ul id="tokenListContainer"></ul>
+                </div>
+            </section>
+
+            <div class="action-area">
+                <button id="generateBtn" class="btn primary">更新預覽 (Update)</button>
+                <button id="printBtn" class="btn outline" style="margin-bottom: 8px;">列印成 PDF (Print)</button>
+                <button id="resetAllBtn" class="btn outline" style="width: 100%; border-color: #c9302c; color: #fff; background-color: #c9302c;">全部歸零 (Reset All)</button>
+            </div>
+            
+             <footer class="footer">
+                <p>For personal use only. Use Chrome for best print result.</p>
+            </footer>
+        </aside>
+
+        <!-- 右側預覽區 (A4紙張大小) -->
+        <main class="preview-area">
+            <div id="printPage" class="a4-page">
+                <div id="counterGrid" class="counter-grid">
+                    <!-- Javascript 將在此渲染指示物 -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
