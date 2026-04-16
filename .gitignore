@@ -1,0 +1,8 @@
+/icons/*.png
+/icons/*.jpg
+/icons/*.jpeg
+/icons/*.webp
+/icons/*.gif
+
+!/icons/placeholder.png
+!/icons/README.md
